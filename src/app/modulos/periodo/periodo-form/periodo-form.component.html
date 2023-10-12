@@ -1,0 +1,88 @@
+<nav>
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a routerLink="/">Início</a></li>
+    <li class="breadcrumb-item"><a routerLink="/cadastro">Listagem</a></li>
+    <li class="breadcrumb-item active">Formulário</li>
+  </ol>
+</nav>
+<div class="alert alert-success" role="alert" *ngIf="msgPost">
+  Período incluido com Sucesso!
+</div>
+<div class="col-12 col-md-12">
+  <p-card header="Cadastro e Controle de Períodos">
+    <div class="row col-md-12">
+      <div class="col-md-6">
+        <form [formGroup]="periodoForm">
+          <div class="form-row col-md-12">
+            <div class="form-group col-md-2">
+              <label for="id">ID:</label>
+              <input
+                type="text"
+                class="form-control"
+                id="id"
+                formControlName="id"
+                readonly=""
+              />
+            </div>
+            <div class="form-group col-md-5">
+              <label for="nome">Referência:</label>
+              <input
+                type="text"
+                class="form-control"
+                id="referencia"
+                formControlName="referencia"
+                autocomplete="off"
+              />
+            </div>
+            <div class="form-group col-md-5">
+              <label for="status">Status:</label>
+              <select id="status" class="form-control" formControlName="status">
+                    <option value="">Escolha o Status</option>
+                    <option *ngFor="let opt of optionsStatus">{{ opt }}</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-row col-md-12">
+            <button
+              type="submit"
+              (click)="gravarPeriodo()"
+              class="btn btn-success mt-3"
+            >
+            <i class="fas fa-save"></i> &nbsp;{{ nomeBotao }}
+            </button>
+          </div>
+        </form>
+      </div>
+      <div class="col-md-6 mt-3">
+        <p-table [value]="periodos" [tableStyle]="{ 'min-width': '20rem', 'max-height': '10rem'}">
+          <ng-template pTemplate="header">
+              <tr>
+                <th>ID</th>
+                <th>Referência</th>
+                <th>Status</th>
+                <th>Ações</th>
+              </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-periodos>
+              <tr>
+                <td>
+                  {{ periodos.id }}
+                </td>
+                <td>
+                  {{periodos.referencia}}
+                </td>
+                <td>{{ periodos.status }}</td>
+                <td>
+                  <button (click)="editar(periodos)" class="btn btn-outline-info btn-sm"><i class="far fa-edit"></i></button>
+                  <button (click)="pegarDados(periodos)" data-toggle="modal" data-target="#ModalExclusao" class="btn btn-outline-danger btn-sm"><i class="fas fa-user-slash"></i></button>
+                </td>
+              </tr>
+          </ng-template>
+      </p-table>
+      </div>
+    </div>
+  </p-card>
+  <!--pre>
+    {{ periodoForm.value | json }}
+  </pre-->
+</div>
