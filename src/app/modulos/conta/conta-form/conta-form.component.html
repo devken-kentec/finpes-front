@@ -6,13 +6,13 @@
   </ol>
 </nav>
 <div class="alert alert-success" role="alert" *ngIf="msgPost">
-  Período incluido com Sucesso!
+  Conta incluida com Sucesso!
 </div>
 <div class="col-12 col-md-12">
-  <p-card header="Cadastro e Controle de Períodos">
+  <p-card header="Cadastro e Controle de Contas">
     <div class="row col-md-12">
       <div class="col-md-6">
-        <form [formGroup]="periodoForm">
+        <form [formGroup]="contaForm">
           <div class="form-row col-md-12">
             <div class="form-group col-md-2">
               <label for="id">ID:</label>
@@ -44,7 +44,6 @@
           </div>
           <div class="form-row col-md-12">
             <button
-              [disabled]="!periodoForm.valid"
               type="submit"
               (click)="gravarPeriodo()"
               class="btn btn-success mt-3"
@@ -55,7 +54,7 @@
         </form>
       </div>
       <div class="col-md-6 mt-3">
-        <p-table [value]="periodos" [tableStyle]="{ 'min-width': '20rem', 'max-height': '10rem'}">
+        <p-table [value]="contas" [tableStyle]="{ 'min-width': '20rem', 'max-height': '10rem'}">
           <ng-template pTemplate="header">
               <tr>
                 <th>ID</th>

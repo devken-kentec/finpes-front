@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { take, tap } from 'rxjs/operators';
 import { Periodo } from './periodo-model';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -14,16 +15,11 @@ export class PeriodoService {
   constructor(private http: HttpClient) { }
 
   public selectStatus(){
-    return this.http.get<[]>(`${this.api}/opt/status`).pipe(
-      take(1),
-      tap(console.log)
-    );
+    return this.http.get<[]>(`${this.api}/opt/status`);
   }
 
   private gravarPeriodo(periodo: Periodo) {
-    return this.http.post(`${this.api}`, periodo).pipe(
-      take(1)
-    );
+    return this.http.post(`${this.api}`, periodo);
   }
 
   private alterarPeriodo(periodo: Periodo) {
@@ -40,9 +36,7 @@ export class PeriodoService {
     }
   }
 
-  public listarPeriodo() {
-    return this.http.get<Periodo[]>(`${this.api}/list/periodo`).pipe(
-      take(1)
-    );
+  public listarPeriodo(): Observable<Periodo[]> {
+    return this.http.get<Periodo[]>(`${this.api}/list/periodo`);
   }
 }

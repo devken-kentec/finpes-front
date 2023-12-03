@@ -1,2 +1,5 @@
-
 @import "primeicons/primeicons.css";
+
+body {
+  zoom: 0.8;
+}

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { PeriodoService } from '../shared/periodo.service';
 import { Periodo } from '../shared/periodo-model';
+import { take } from 'rxjs';
 
 @Component({
   selector: 'app-periodo-form',
@@ -31,13 +32,21 @@ export class PeriodoFormComponent implements OnInit {
   }
 
   public carregaStatus(): void {
-    this.periodoService.selectStatus().subscribe(
-      res => this.optionsStatus = res
+    this.periodoService.selectStatus().pipe(
+      take(1)
+    ).subscribe(
+      {
+        next: (res) => {this.optionsStatus = res},
+        error: err => {
+          console.log("Erro na requisição!", err);
+        },
+      }
+
     );
   }
 
   public carregarListaPeriodo(): void  {
-   this.periodoService.listarPeriodo().subscribe(
+   this.periodoService.listarPeriodo().pipe(take(1)).subscribe(
     res => this.periodos = res
    );
   }
@@ -45,12 +54,17 @@ export class PeriodoFormComponent implements OnInit {
   public gravarPeriodo(): void {
     let form = this.periodoForm;
     if(form.valid){
-      this.periodoService.salvarAlterarPeriodo(form.value).subscribe((success)=> {
-        this.msgPost = true;
+      this.periodoService.salvarAlterarPeriodo(form.value).pipe(take(1)).subscribe({
+        next: () => {
+            this.msgPost = true;
+            this.nomeBotao = "Salvar";
+            this.carregarListaPeriodo();
+        },
+        error: (err) => {
+          console.log("Erro na requisição!", err);
+        }
       });
       form.reset();
-      this.carregarListaPeriodo();
-      this.nomeBotao = "Salvar";
     }
   }
 

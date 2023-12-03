@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
   { path: 'periodo', loadChildren: ()=> import('./modulos/periodo/periodo.module').then(p => p.PeriodoModule )},
+  { path: 'conta', loadChildren: ()=> import('./modulos/conta/conta.module').then(c => c.ContaModule )},
   { path: 'user', loadChildren: ()=> import('./modulos/user/user.module').then(u => u.UserModule )},
   { path: 'receita', loadChildren: ()=> import('./modulos/receita/receita.module').then(r => r.ReceitaModule )},
   { path: 'despesa', loadChildren: ()=> import('./modulos/despesa/despesa.module').then(d => d.DespesaModule )}
