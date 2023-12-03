@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { environment } from 'src/environments/environment';
-import { take, tap } from 'rxjs/operators';
+import { take } from 'rxjs/operators';
 import { Periodo } from './periodo-model';
 import { Observable } from 'rxjs';
 
@@ -11,12 +11,7 @@ import { Observable } from 'rxjs';
 export class PeriodoService {
 
   private readonly api = `${environment.api}/finpes/api/v1/periodo`;
-
-  constructor(private http: HttpClient) { }
-
-  public selectStatus(){
-    return this.http.get<[]>(`${this.api}/opt/status`);
-  }
+  private http = inject(HttpClient);
 
   private gravarPeriodo(periodo: Periodo) {
     return this.http.post(`${this.api}`, periodo);

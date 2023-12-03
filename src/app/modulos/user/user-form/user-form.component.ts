@@ -2,7 +2,7 @@ import { UserService } from './../shared/user.service';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { User } from '../shared/user-model';
-import { PeriodoService } from '../../periodo/shared/periodo.service';
+import { SharedService } from '../../shared/shared.service';
 
 @Component({
   selector: 'app-user-form',
@@ -18,7 +18,7 @@ export class UserFormComponent implements OnInit {
   nomeBotao: string = "Salvar";
 
   constructor(private fb: FormBuilder,
-              private periodoService: PeriodoService,
+              private sharedService: SharedService,
               private  userService:UserService){
     this.userForm = this.fb.group({
       id: [ 0, []],
@@ -36,7 +36,7 @@ export class UserFormComponent implements OnInit {
   }
 
   public carregaStatus(): void {
-    this.periodoService.selectStatus().subscribe(
+    this.sharedService.selectStatus().subscribe(
       res => this.optionsStatus = res
     );
   }

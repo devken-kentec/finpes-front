@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { PeriodoService } from '../shared/periodo.service';
 import { Periodo } from '../shared/periodo-model';
 import { take } from 'rxjs';
+import { SharedService } from '../../shared/shared.service';
 
 @Component({
   selector: 'app-periodo-form',
@@ -18,7 +19,7 @@ export class PeriodoFormComponent implements OnInit {
   periodos: Periodo[] = [];
   nomeBotao: string = "Salvar";
 
-  constructor(private fb: FormBuilder, private periodoService: PeriodoService) {
+  constructor(private fb: FormBuilder, private periodoService: PeriodoService, private sharedService: SharedService) {
     this.periodoForm = this.fb.group({
       id: [ 0, []],
       referencia: ['', [Validators.required]],
@@ -32,7 +33,7 @@ export class PeriodoFormComponent implements OnInit {
   }
 
   public carregaStatus(): void {
-    this.periodoService.selectStatus().pipe(
+    this.sharedService.selectStatus().pipe(
       take(1)
     ).subscribe(
       {
